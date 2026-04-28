@@ -16,9 +16,7 @@ async function processDocument() {
   try {
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/xml",
-      },
+      headers: { "Content-Type": "application/xml" },
       body: xmlBody,
     });
 
@@ -26,11 +24,11 @@ async function processDocument() {
       throw new Error(`HTTP error! Status: ${response.status} ${response.statusText}`);
     }
 
-    const responseText = await response.text();
+    const json = await response.json();
 
-    console.log("Response:", responseText);
-    document.getElementById("response").textContent = responseText;
-    return responseText;
+    console.log("Response:", json);
+    document.getElementById("response").textContent = JSON.stringify(json, null, 2);
+    return json;
 
   } catch (error) {
     console.error("Request failed:", error);
